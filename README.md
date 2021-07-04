@@ -27,6 +27,7 @@
 后台：<a href="http://shcblog.cn:8181/admin/login">http://shcblog.cn:8181/admin/login</a></br>
 账号：admin</br>
 密码：111111</br>
+Swagger：<a href="http://shcblog.cn:8181/doc.html">http://shcblog.cn:8181/doc.html</a>注：暂为添加注释说明</br>
 
 
 <h2>项目截图</h2>
