@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shier.mall.dao.OrderItemMapper">
+    <resultMap id="BaseResultMap" type="com.shier.mall.entity.OrderItem">
+        <id column="order_item_id" jdbcType="BIGINT" property="orderItemId"/>
+        <result column="order_id" jdbcType="BIGINT" property="orderId"/>
+        <result column="goods_id" jdbcType="BIGINT" property="goodsId"/>
+        <result column="goods_name" jdbcType="VARCHAR" property="goodsName"/>
+        <result column="goods_cover_img" jdbcType="VARCHAR" property="goodsCoverImg"/>
+        <result column="selling_price" jdbcType="INTEGER" property="sellingPrice"/>
+        <result column="goods_count" jdbcType="INTEGER" property="goodsCount"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        order_item_id
+        , order_id, goods_id, goods_name, goods_cover_img, selling_price, goods_count,
+    create_time
+    </sql>
+
+    <insert id="insertBatch" parameterType="com.shier.mall.entity.OrderItem">
+        insert into tb_jvshiji_mall_order_item (order_id, goods_id,
+        goods_name, goods_cover_img, selling_price,
+        goods_count)
+        values
+        <foreach collection="orderItems" item="orderItem" separator=",">
+            (#{orderItem.orderId,jdbcType=BIGINT}, #{orderItem.goodsId,jdbcType=BIGINT},
+            #{orderItem.goodsName,jdbcType=VARCHAR}, #{orderItem.goodsCoverImg,jdbcType=VARCHAR},
+            #{orderItem.sellingPrice,jdbcType=INTEGER},
+            #{orderItem.goodsCount,jdbcType=INTEGER})
+        </foreach>
+    </insert>
+
+    <select id="selectByOrderId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from tb_jvshiji_mall_order_item
+        where order_id = #{orderItemId,jdbcType=BIGINT}
+    </select>
+    <select id="selectByOrderIds" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from tb_jvshiji_mall_order_item
+        where order_id
+        in
+        <foreach item="id" collection="orderIds" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </select>
+
+</mapper>

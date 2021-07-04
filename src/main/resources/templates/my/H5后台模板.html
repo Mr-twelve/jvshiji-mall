@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<header th:replace="admin/header::header-fragment">
+
+</header>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    <!-- 引入页面头header-fragment -->
+    <div th:replace="admin/header::header-nav"></div>
+    <!-- 引入工具栏sidebar-fragment -->
+    <div th:replace="admin/sidebar::sidebar-fragment(${path})"></div>
+
+    <div class="layui-body mybgcolor move aa">
+        <div style="height: 100%;margin-right: 6px;background-color: #F0F0F0">
+            <!---------------------------------------------->
+
+            <!---------------------------------------------->
+            <!--            <div class="aa">-->
+            <!--                <span></span>-->
+            <!--                <span></span>-->
+            <!--                <span></span>-->
+            <!--                <span></span>-->
+            <!--            </div>-->
+        </div>
+    </div>
+
+    <!-- 引入页脚footer-fragment -->
+    <div th:replace="admin/footer::footer-fragment"></div>
+</div>
+<script th:src="@{/plugins/jquery/jquery.min.js}"></script>
+<script th:src="@{/layui/layui.all.js}"></script>
+<script th:src="@{/layui/layui.js}"></script>
+<!--改！！！-->
+<script th:src="@{/admin/js/goods.js}"></script>
+
+</body>
+</html>
+</body>
+</html>

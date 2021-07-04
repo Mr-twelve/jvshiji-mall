@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<header th:replace="admin/header::header-fragment">
+
+</header>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    <!-- 引入页面头header-fragment -->
+    <div th:replace="admin/header::header-nav"></div>
+    <!-- 引入工具栏sidebar-fragment -->
+    <div th:replace="admin/sidebar::sidebar-fragment(${path})"></div>
+
+    <div class="layui-body mybgcolor move aa">
+        <div style="height: 100%;margin-right: 6px;background-color: #F0F0F0">
+            <!---------------------------------------------->
+            <form class="layui-form" action="" style="padding: 20px 30px 0 0">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">请选择分类</label>
+                    <!--一级分类-->
+                    <div class="layui-input-inline">
+                        <select name="category1" id="category1" lay-filter="category1"></select>
+                    </div>
+                    <!--二级分类-->
+                    <div class="layui-input-inline">
+                        <select name="category2" id="category2" lay-filter="category2"></select>
+                    </div>
+                    <!--三级分类-->
+                    <div class="layui-input-inline">
+                        <select name="category3" id="category3" lay-filter="category3"></select>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">商品名称</label>
+                    <div class="layui-input-block">
+                        <input type="text" id="goodsName" name="goodsName" lay-verify="title" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">商品简介</label>
+                    <div class="layui-input-block">
+                        <input type="text" id="goodsIntro" name="goodsIntro" lay-verify="title" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">商品价格</label>
+                        <div class="layui-input-inline">
+                            <input type="number" id="originalPrice" name="originalPrice" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">商品售卖价</label>
+                        <div class="layui-input-inline">
+                            <input type="number" id="sellingPrice" name="sellingPrice" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">商品库存</label>
+                        <div class="layui-input-inline">
+                            <input type="number" id="stockNum" name="stockNum" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">商品小标签</label>
+                    <div class="layui-input-block">
+                        <input type="text" id="tag" name="tag" lay-verify="title" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label" >上架状态</label>
+                    <div class="layui-input-block">
+                        <input type="radio" id="goodsSellStatus1" name="goodsSellStatus" value="1" title="上架" checked="">
+                        <div class="layui-unselect layui-form-radio layui-form-radioed"><i
+                                class="layui-anim layui-icon"></i>
+                            <div>上架</div>
+                        </div>
+                        <input type="radio" id="goodsSellStatus2" name="goodsSellStatus" value="0" title="下架">
+                        <div class="layui-unselect layui-form-radio"><i class="layui-anim layui-icon"></i>
+                            <div>下架</div>
+                        </div>
+                    </div>
+                </div>
+                <img onclick="getimage()" id="getcheckImage" src="/upload/uploadimg.png" style="width:160px;height:120px;padding-left: 110px"/>
+                <input class="layui-hide" id="checkImage" type="file" name="goodsCoverImg" onchange="viewImage()" />
+                <div style="background-color: white;margin-left: 30px;margin-top: 25px">
+                    <textarea name="goodsDetailContent" class="layui-textarea layui-bg-cyan" id="goodsDetailContent" style="display: none;"></textarea>
+                </div>
+                <div class="layui-btn-container demoTable" style="margin-left: 30px;margin-top: 25px">
+                    <button type="button" onclick="upgoods()" id="tip" class="layui-btn layui-btn-lg layui-bg-green">
+                        <text id="tiptext">保存商品</text>
+                    </button>
+                </div>
+            </form>
+            <!---------------------------------------------->
+            <!--            <div class="aa">-->
+            <!--                <span></span>-->
+            <!--                <span></span>-->
+            <!--                <span></span>-->
+            <!--                <span></span>-->
+            <!--            </div>-->
+        </div>
+    </div>
+
+    <!-- 引入页脚footer-fragment -->
+    <div th:replace="admin/footer::footer-fragment"></div>
+</div>
+<script th:src="@{/plugins/jquery/jquery.min.js}"></script>
+<script th:src="@{/layui/layui.all.js}"></script>
+<!--<script th:src="@{/layui/layui.js}"></script>-->
+<!--改！！！-->
+<script th:src="@{/admin/js/goods_edit.js}"></script>
+<script>
+    //选择图片
+    function getimage() {
+        //调用隐藏input的上传图片按钮
+        $('#checkImage').trigger('click')
+
+    }
+    //图片预览
+    function viewImage() {
+        //获取选择图片的信息
+        var objUrl = $('#checkImage')[0].files[0];
+
+        console.log(objUrl)
+        // if (!(objUrl.name && /^(jpg|jpeg|png|gif)$/.test(objUrl.name))) {
+        //     alert('只支持jpg、png、gif格式的文件！');
+        //     return false;
+        // }
+        var imgpath = getObjectURL($('#checkImage')[0].files[0]);
+        if (objUrl) {
+            // 在这里修改图片的地址属性
+            $("#getcheckImage").attr("src", imgpath);
+        }
+    }
+    //建立一個可存取到該file的url
+    function getObjectURL(file) {
+        var url = null;
+        // 下面函数执行的效果是一样的，只是需要针对不同的浏览器执行不同的 js 函数而已
+        if (window.createObjectURL != undefined) { // basic
+            url = window.createObjectURL(file);
+        } else if (window.URL != undefined) { // mozilla(firefox)
+            url = window.URL.createObjectURL(file);
+        } else if (window.webkitURL != undefined) { // webkit or chrome
+            url = window.webkitURL.createObjectURL(file);
+        }
+        return url;
+    }
+    function upgoods() {
+        var formData = new FormData();
+        var img = $('#checkImage')[0].files[0]
+        formData.append('file', img);
+        var goods = {
+            'goodsName':$('#goodsName')[0].value,
+            'goodsIntro':$('#goodsIntro')[0].value,
+            'goodsCategoryId':$('#category3')[0].value,
+            'goodsCoverImg':img,
+            'goodsCarousel':img,
+            'originalPrice':$('#originalPrice')[0].value,
+            'sellingPrice':$('#sellingPrice')[0].value,
+            'stockNum':$('#stockNum')[0].value,
+            'tag':$('#tag')[0].value,
+            'goodsSellStatus':($('#goodsSellStatus1')[0].checked?'0':'1'),
+            'goodsDetailContent':"这个Layui我只想用UI，它这个富文本编辑器只能通过Layui取值，这样就不能自定义传后台了",
+        }
+        for(let key  in goods){
+            if (isnull(goods[key])){
+                console.log(key + '---' + goods[key])
+                layer.msg('请填写全部信息', function () {});
+                return false
+            }
+        }
+        console.log(formData)
+        $.ajax({
+            url: "/layeditupload",
+            contentType: false,
+            processData: false,
+            type: "POST",
+            dataType: "json",
+            data: formData,
+            success: function (res) {
+                console.log(res)
+                goods.goodsCoverImg = res.data.src
+                goods.goodsCarousel = res.data.src
+                console.log(goods)
+                //上传商品信息
+                $.ajax({
+                    type:"POST",
+                    url:"/admin/goodsedit/addgoods",
+                    dataType: "json",
+                    data: JSON.stringify(goods),
+                    contentType: 'application/json; charset=UTF-8',
+                    success: function (data) {
+                        console.log(data)
+                        if (data.code == 0) {
+                            layer.msg('成功', function () {
+                            });
+                        } else {
+                            layer.msg('很抱歉，出问题啦，请刷新后重试', function () {
+                            });
+                        }
+                    }
+                })
+            }
+        })
+
+    }
+    function isnull(data) {
+        if (data == "" || data == null || data == undefined){
+            return true
+        }else {
+            return false
+        }
+    }
+</script>
+</body>
+</html>
+</body>
+</html>

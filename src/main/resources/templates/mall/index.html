@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="mall/header::head-fragment('NewBee商城-首页','index')">
+<body>
+<header th:replace="mall/header::header-fragment"></header>
+<content id="content">
+    <nav th:replace="mall/header::nav-fragment"></nav>
+
+    <div id="banner">
+        <!--左侧分类-->
+        <div class="all-sort-list">
+            <th:block th:each="categoryone : ${categoryList}">
+                <th:block th:if="${categoryoneStat.index < 12}">
+                    <th:block th:if="${categoryone.categoryLevel==1}">
+                        <div class="item">
+                            <h3><span>·</span><a href="##">
+                                <th:block th:text="${categoryone.categoryName}"></th:block>
+                            </a></h3>
+                            <div class="item-list clearfix">
+                                <div class="subitem">
+
+                                    <th:block th:each="categorytwo : ${categoryList}">
+                                        <th:block th:if="${categorytwo.parentId.equals(categoryone.categoryId)}">
+                                            <dl class="fore1">
+                                                <dt><a href="#">
+                                                    <th:block th:text="${categorytwo.categoryName}"></th:block>
+                                                </a></dt>
+                                                <dd>
+                                                    <th:block th:each="categorythird : ${categoryList}">
+                                                        <th:block
+                                                                th:if="${categorythird.parentId.equals(categorytwo.categoryId)}">
+                                                            <em><a href="#"
+                                                                   th:href="@{'/search?goodsCategoryId='+${categorythird.categoryId}}">
+                                                                <th:block
+                                                                        th:text="${categorythird.categoryName}"></th:block>
+                                                            </a></em>
+                                                        </th:block>
+                                                    </th:block>
+                                                </dd>
+                                            </dl>
+                                        </th:block>
+                                    </th:block>
+                                </div>
+                            </div>
+                        </div>
+                    </th:block>
+                </th:block>
+            </th:block>
+
+        </div>
+        <!--轮播图-->
+        <div class="swiper-container fl">
+            <div class="swiper-wrapper">
+                <div class="layui-carousel" id="test1">
+                    <div carousel-item>
+                        <!--配置了轮播图显示-->
+                        <th:block th:unless="${#lists.isEmpty(carouselList)}">
+                            <img th:each="item:${carouselList}" th:src="${item.carouselUrl}">
+                        </th:block>
+                        <!--未配置显示默认-->
+                        <th:block th:if="${#lists.isEmpty(carouselList)}">
+                            <img th:src="@{/mall/image/img.png}">
+                            <img th:src="@{/mall/image/img.png}">
+                            <img th:src="@{/mall/image/img.png}">
+                        </th:block>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--热销-->
+    <div id="sub_banner">
+        <!-- 已配置热销商品则显示配置内容 -->
+        <th:block th:unless="${#lists.isEmpty(hotGoodses)}">
+            <th:block th:each="hotGoodse : ${hotGoodses}">
+                <div class="hot-image">
+                    <a th:href="@{'/goods/detail/'+${hotGoodse.goodsId}}">
+                        <img th:src="@{${hotGoodse.goodsCoverImg}}" th:alt="${hotGoodse.goodsName}">
+                    </a>
+                </div>
+            </th:block>
+        </th:block>
+        <!-- 未配置热销商品则显示默认 -->
+        <th:block th:if="${#lists.isEmpty(hotGoodses)}">
+            <div class="hot-image">
+                <a href="##">
+                    <img src="./mall/image/sub_banner/r4.jpg" alt="">
+                </a>
+            </div>
+            <div class="hot-image">
+                <a href="##">
+                    <img src="./mall/image/sub_banner/hot2.jpg" alt="">
+                </a>
+            </div>
+            <div class="hot-image">
+                <a href="##">
+                    <img src="./mall/image/sub_banner/hot3.jpg" alt="">
+                </a>
+            </div>
+            <div class="hot-image">
+                <a href="##">
+                    <img src="./mall/image/sub_banner/hot4.jpg" alt="">
+                </a>
+            </div>
+        </th:block>
+    </div>
+    <!--新品上线-->
+    <div id="flash">
+        <h2>新品上线</h2>
+        <ul>
+            <!-- 已配置新品则显示配置内容 -->
+            <th:block th:unless="${#lists.isEmpty(newGoodses)}">
+                <th:block th:each="newGoods : ${newGoodses}">
+                    <li>
+                        <a th:href="@{'/goods/detail/'+${newGoods.goodsId}}">
+                            <img th:src="@{${newGoods.goodsCoverImg}}" th:alt="${newGoods.goodsName}">
+                            <p class="name" th:text="${newGoods.goodsName}">NewBeeMall</p>
+                            <p class="discount" th:text="${newGoods.goodsIntro}">NewBeeMall</p>
+                            <p class="item_price" th:text="${newGoods.sellingPrice}">NewBeeMall</p>
+                        </a>
+                    </li>
+                </th:block>
+            </th:block>
+            <!-- 未配置则显示默认 -->
+            <th:block th:if="${#lists.isEmpty(newGoodses)}">
+                <li>
+                    <a href="##">
+                        <img src="./mall/image/sub_banner/m6.jpg" alt=""/>
+                        <p class="name">华为平板 M6</p>
+                        <p class="discount">醇香音质 身临其境</p>
+                        <p class="price">1499元起</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="##">
+                        <img src="./mall/image/sub_banner/headphones.jpg" alt=""/>
+                        <p class="name">蓝牙耳机</p>
+                        <p class="discount">一键变声 原唱消音</p>
+                        <p class="price">228元</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="##">
+                        <img src="./mall/image/sub_banner/pc.jpg" alt=""/>
+                        <p class="name">15.6" i3笔记本</p>
+                        <p class="discount">纤薄机身 金属材质</p>
+                        <p class="price">3099元起</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="##">
+                        <img src="./mall/image/sub_banner/air.jpg" alt=""/>
+                        <p class="name">空气净化器</p>
+                        <p class="discount">大空间 快循环</p>
+                        <p class="price">1099元起</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="##">
+                        <img src="./mall/image/sub_banner/baby-car.jpg" alt=""/>
+                        <p class="name">折叠婴儿推车</p>
+                        <p class="discount">出发去向往的地方</p>
+                        <p class="price">649元起</p>
+                    </a>
+                </li>
+            </th:block>
+        </ul>
+    </div>
+    <!--为你推荐-->
+    <div id="recommend">
+        <h2>为你推荐</h2>
+        <a href="##" class="more">查看更多>></a>
+        <ul><!-- 已配置推荐商品则显示配置内容 -->
+            <th:block th:unless="${#lists.isEmpty(recommendGoodses)}">
+                <th:block th:each="recommendGoods : ${recommendGoodses}">
+                    <li>
+                        <a th:href="@{'/goods/detail/'+${recommendGoods.goodsId}}">
+                            <div class="info discount" th:text="${recommendGoods.tag}">
+                                新品
+                            </div>
+                            <img th:src="@{${recommendGoods.goodsCoverImg}}" th:alt="${recommendGoods.goodsName}">
+                            <p class="name" th:text="${recommendGoods.goodsName}">NewBeeMall</p>
+                            <p class="item_price" th:text="${recommendGoods.sellingPrice}">NewBeeMall</p>
+                            <p class="counter">猜你喜欢</p>
+                            <div class="comment">
+                                <p>新蜂精选</p>
+                                <p>好物也可以不贵</p>
+                            </div>
+                        </a>
+                    </li>
+                </th:block>
+            </th:block>
+            <!-- 未配置则显示默认 -->
+            <th:block th:if="${#lists.isEmpty(recommendGoodses)}">
+                <li>
+                    <a href="##">
+                        <div class="info discount">
+                            新品
+                        </div>
+                        <img src="./mall/image/sub_banner/r1.jpg" alt=""/>
+                        <p class="name">华为平板 M6</p>
+                        <p class="price">1499元</p>
+                        <p class="counter">猜你喜欢</p>
+                        <div class="comment">
+                            <p>新蜂精选</p>
+                            <p>好物也可以不贵</p>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="##">
+                        <div class="info discount">
+                            5折起
+                        </div>
+                        <img src="./mall/image/sub_banner/r2.jpg" alt=""/>
+                        <p class="name">华为平板 M6</p>
+                        <p class="price">1499元</p>
+                        <p class="counter">猜你喜欢</p>
+                        <div class="comment">
+                            <p>新蜂精选</p>
+                            <p>好物也可以不贵</p>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="##">
+                        <div class="info discount">
+                            新品
+                        </div>
+                        <img src="./mall/image/sub_banner/r5.jpg" alt=""/>
+                        <p class="name">华为平板 M6</p>
+                        <p class="price">1499元</p>
+                        <p class="counter">猜你喜欢</p>
+                        <div class="comment">
+                            <p>新蜂精选</p>
+                            <p>好物也可以不贵</p>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="##">
+                        <div class="info discount">
+                            官降
+                        </div>
+                        <img src="./mall/image/sub_banner/m6.jpg" alt=""/>
+                        <p class="name">华为平板 M6</p>
+                        <p class="price">1499元</p>
+                        <p class="counter">猜你喜欢</p>
+                        <div class="comment">
+                            <p>新蜂精选</p>
+                            <p>好物也可以不贵</p>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="##">
+                        <div class="info discount">
+                            新品
+                        </div>
+                        <img src="./mall/image/sub_banner/r6.jpg" alt=""/>
+                        <p class="name">华为平板 M6</p>
+                        <p class="price">1499元</p>
+                        <p class="counter">猜你喜欢</p>
+                        <div class="comment">
+                            <p>新蜂精选</p>
+                            <p>好物也可以不贵</p>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="##">
+                        <div class="info discount">
+                            热销
+                        </div>
+                        <img src="./mall/image/sub_banner/r5.jpg" alt=""/>
+                        <p class="name">华为平板 M6</p>
+                        <p class="price">1499元</p>
+                        <p class="counter">猜你喜欢</p>
+                        <div class="comment">
+                            <p>新蜂精选</p>
+                            <p>好物也可以不贵</p>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="##">
+                        <div class="info discount">
+                            享折扣
+                        </div>
+                        <img src="./mall/image/sub_banner/r4.jpg" alt=""/>
+                        <p class="name">华为平板 M6</p>
+                        <p class="price">1499元</p>
+                        <p class="counter">猜你喜欢</p>
+                        <div class="comment">
+                            <p>新蜂精选</p>
+                            <p>好物也可以不贵</p>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="##">
+                        <div class="info discount">
+                            最低价
+                        </div>
+                        <img src="./mall/image/sub_banner/r3.jpg" alt=""/>
+                        <p class="name">华为平板 M6</p>
+                        <p class="price">1499元</p>
+                        <p class="counter">猜你喜欢</p>
+                        <div class="comment">
+                            <p>新蜂精选</p>
+                            <p>好物也可以不贵</p>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="##">
+                        <div class="info discount">
+                            热销
+                        </div>
+                        <img src="./mall/image/sub_banner/r2.jpg" alt=""/>
+                        <p class="name">华为平板 M6</p>
+                        <p class="price">1499元</p>
+                        <p class="counter">猜你喜欢</p>
+                        <div class="comment">
+                            <p>新蜂精选</p>
+                            <p>好物也可以不贵</p>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="##">
+                        <div class="info discount">
+                            热销
+                        </div>
+                        <img src="./mall/image/sub_banner/r1.jpg" alt=""/>
+                        <p class="name">华为平板 M6</p>
+                        <p class="price">1499元</p>
+                        <p class="counter">猜你喜欢</p>
+                        <div class="comment">
+                            <p>新蜂精选</p>
+                            <p>好物也可以不贵</p>
+                        </div>
+                    </a>
+                </li>
+            </th:block>
+        </ul>
+    </div>
+</content>
+
+<div th:replace="mall/footer::footer-fragment"></div>
+<script th:src="@{/plugins/jquery/jquery.min.js}"></script>
+<script th:src="@{/layui/layui.js}"></script>
+<script th:src="@{/mall/js/index.js}"></script>
+<script th:src="@{/mall/js/search.js}"></script>
+<script>
+    layui.use('carousel', function () {
+        var carousel = layui.carousel;
+        //建造实例
+        carousel.render({
+            elem: '#test1'
+            , width: '100%' //设置容器宽度
+            , height: '447px'
+            , interval: 800
+            , arrow: 'always' //始终显示箭头
+            //,anim: 'updown' //切换动画方式
+        });
+    });
+</script>
+</body>
+</html>

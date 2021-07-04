@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<header th:replace="admin/header::header-fragment">
+
+</header>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    <!-- 引入页面头header-fragment -->
+    <div th:replace="admin/header::header-nav"></div>
+    <!-- 引入工具栏sidebar-fragment -->
+    <div th:replace="admin/sidebar::sidebar-fragment(${path})"></div>
+
+
+    <div class="layui-body mybgcolor move aa">
+        <!--隐藏域，用于取setAttribute的值-->
+        <!--/*@thymesVar id="categoryLevel" type="int"*/-->
+        <input class="layui-hide" th:value='${categoryLevel}' id="categoryLevel"/>
+        <!--/*@thymesVar id="parentId" type="int"*/-->
+        <input class="layui-hide" th:value='${parentId}' id="parentId"/>
+
+
+        <div style="height: 100%;margin-right: 6px;background-color: #F0F0F0">
+            <!---------------------------------------------->
+            <div>
+                <table id="category" lay-filter="category"></table>
+            </div>
+            <!---------------------------------------------->
+            <!--            <div class="aa">-->
+            <!--                <span></span>-->
+            <!--                <span></span>-->
+            <!--                <span></span>-->
+            <!--                <span></span>-->
+            <!--            </div>-->
+        </div>
+    </div>
+
+    <!-- 引入页脚footer-fragment -->
+    <div th:replace="admin/footer::footer-fragment"></div>
+</div>
+<script th:src="@{/plugins/jquery/jquery.min.js}"></script>
+<script th:src="@{/layui/layui.all.js}"></script>
+<script th:src="@{/layui/layui.js}"></script>
+<script th:src="@{/admin/js/category.js}"></script>
+<style type="text/css">
+
+    .layui-table-view {
+        margin: 0;
+    }
+    .laytable-cell-checkbox, .laytable-cell-numbers, .laytable-cell-radio, .laytable-cell-space {
+         padding: 0 40px;
+         text-align: center;
+    }
+    .layui-table td, .layui-table th {
+        font-size: 18px;
+    }
+
+
+</style>
+<script type="text/html" id="toolbarDemo">
+    <div class="layui-btn-container demoTable">
+        <button onclick="addCategory('新增分类')" class="layui-btn layui-btn-lg"><i class="layui-icon">&#xe624;</i> 新增</button>
+        <button onclick="setCategory()" class="layui-btn layui-btn-lg"><i class="layui-icon">&#xe642;</i> 修改</button>
+        <button onclick="deleteCategory()" class="layui-btn layui-btn-lg layui-bg-red"><i class="layui-icon">&#xe640;</i> 删除</button>
+        <button onclick="gonext()" class="layui-btn layui-btn-lg"><i class="layui-icon">&#xe640;</i> 下级</button>
+        <button onclick="goreturn()" class="layui-btn layui-btn-lg"><i class="layui-icon">&#xe640;</i> 返回</button>
+        <button id="tip" class="layui-btn layui-btn-lg layui-bg-green layui-btn-disabled"><text id="tiptext"></text></button>
+    </div>
+</script>
+
+</body>
+</html>
+</body>
+</html>

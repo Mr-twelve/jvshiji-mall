@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<aside th:fragment="sidebar-fragment(path)" class="layui-side layui-bg-black">
+    <div class="layui-side-scroll" style="background-color: #141e30">
+        <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+        <ul class="layui-nav layui-nav-tree"  lay-filter="test">
+            <li class="layui-nav-item layui-nav-itemed">
+                <a class="" style="background-color: #141e30" href="javascript:;">JSJ</a>
+                <dl class="layui-nav-child">
+                    <dd><a href="javascript:;" th:style="${path}=='index'?'background-color: #009688':'background-color: #243b55'" th:href="@{/admin/index}">商城后台</a></dd>
+                    <dd><a href="javascript:;" th:style="${path}=='xxxxxx'?'background-color: #009688':'background-color: #243b55'" th:href="@{/jvshijimall/index}">商城首页</a></dd>
+                </dl>
+            </li>
+            <li class="layui-nav-item layui-nav-itemed">
+                <a href="javascript:;" style="background-color: #141e30">首页配置</a>
+                <dl class="layui-nav-child">
+                    <dd><a href="javascript:;" th:style="${path}=='carousel'?'background-color: #009688':'background-color: #243b55'" th:href="@{/admin/carousel}">轮播图配置</a></dd>
+                    <dd><a href="javascript:;" th:style="${path}=='INDEX_GOODS_HOTS'?'background-color: #009688':'background-color: #243b55'" th:href="@{/admin/indexConfigs?configType=3}">热销商品配置</a></dd>
+                    <dd><a href="javascript:;" th:style="${path}=='INDEX_GOODS_NEW'?'background-color: #009688':'background-color: #243b55'" th:href="@{/admin/indexConfigs?configType=4}">新品上线配置</a></dd>
+                    <dd><a href="javascript:;" th:style="${path}=='INDEX_GOODS_RECOMMOND'?'background-color: #009688':'background-color: #243b55'" th:href="@{/admin/indexConfigs?configType=5}">为你推荐配置</a></dd>
+                </dl>
+            </li>
+            <li class="layui-nav-item layui-nav-itemed">
+                <a href="javascript:;" style="background-color: #141e30">管理模块</a>
+                <dl class="layui-nav-child">
+                    <dd><a href="javascript:;" th:style="${path}=='category'?'background-color: #009688':'background-color: #243b55'" th:href="@{/admin/category?categoryLevel=1&parentId=0}" style="background-color: #243b55">分类管理</a></dd>
+                    <dd><a href="javascript:;" th:href="@{/admin/goods}" th:style="${path}=='goods'?'background-color: #009688':'background-color: #243b55'"  style="background-color: #243b55">商品管理</a></dd>
+                    <dd><a href="javascript:;" th:href="@{/admin/users}" th:style="${path}=='users'?'background-color: #009688':'background-color: #243b55'"  style="background-color: #243b55">会员管理</a></dd>
+                    <dd><a href="javascript:;" th:href="@{/admin/orders}" th:style="${path}=='orders'?'background-color: #009688':'background-color: #243b55'"  style="background-color: #243b55">订单管理</a></dd>
+                    <dd><a href="javascript:;" th:style="${path}=='goodsedit'?'background-color: #009688':'background-color: #243b55'" th:href="@{/admin/goodsedit}" style="background-color: #243b55">商品添加</a></dd>
+                </dl>
+            </li>
+            <li class="layui-nav-item layui-nav-itemed">
+                <a href="javascript:;" style="background-color: #141e30">系统模块</a>
+                <dl class="layui-nav-child">
+                    <dd><a href="javascript:;" th:style="${path}=='profile'?'background-color: #009688':'background-color: #243b55'" th:href="@{/admin/profile}" style="background-color: #243b55">修改密码</a></dd>
+                    <dd><a href="javascript:;" th:href="@{/admin/logout}" style="background-color: #243b55">安全退出</a></dd>
+                </dl>
+            </li>
+        </ul>
+    </div>
+</aside>
+</html>

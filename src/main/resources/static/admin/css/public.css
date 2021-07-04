@@ -1,0 +1,17 @@
+.paomadeng{
+    color: #f35626;
+    background-image:-webkit-linear-gradient(92deg, #27e812, #e208d7);
+    -webkit-animation: hue 0.8s infinite linear;
+    -webkit-text-fill-color: transparent;
+    -webkit-background-clip:text;
+}
+
+@-webkit-keyframes hue {
+    from {
+        -webkit-filter: hue-rotate(0deg);
+    }
+
+    to {
+        -webkit-filter: hue-rotate(-360deg);
+    }
+}

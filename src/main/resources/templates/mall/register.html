@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!--Edge 模式通知 Windows Internet Explorer 以最高级别的可用模式显示内容-->
+    <meta charset="UTF-8" http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>聚食集商城丨注册</title>
+    <!--iewport标记，用于指定用户是否可以缩放Web页面，并对相关的选项进行设定。
+    device-width即表示，视区宽度应为设备的屏幕宽度。类似的，device-height即表示设备的屏幕高度。
+    initial-scale用于设置Web页面的初始缩放比例。通常情况下，设备会在浏览器中呈现出整个Web页面。设为1.0则显示未经缩放的Web页面。
+    maximum-scale和minimum-scale用于设置用户对于Web页面缩放比例的限制。值的范围为0.25~10.0之间
+    -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" th:href="@{/mall/css/register.css}"/>
+    <!--layui的css-->
+    <link rel="stylesheet" th:href="@{/layui/css/layui.css}">
+</head>
+<body>
+
+<div class="login fontcolor gradient">
+    <h2 style="color: #FFD700">聚食集商城丨注册</h2>
+    <form th:action="@{/admin/login}" method="post" id="loginForm">
+        <div class="login_box">
+            <!-- required就是不能为空 必须在css效果中有很大的作用 -->
+            <!-- 可以简写为required -->
+            <input id="userName" name="userName" type="text" required autocomplete="off"/><label style="color: #FFD700">用户名</label>
+        </div>
+        <div class="login_box">
+            <input id="password" name="password" type="password" required="required" autocomplete="off"/><label
+                style="color: #FFD700">密码</label>
+        </div>
+        <div class="login_box">
+            <input id="aginpassword" name="aginpassword" type="password" required="required" autocomplete="off"/><label
+                style="color: #FFD700">确认密码</label>
+        </div>
+        <div class="login_box">
+            <input id="verifyCode" name="verifyCode" type="text" required="required" autocomplete="off"/><label
+                style="color: #FFD700">验证码</label>
+        </div>
+        <div class="login_box" style="margin-bottom: 30px;">
+            <img id="captcha" class="login_box" th:src="@{/captcha}" width="130px" height="48px"
+                 onclick="this.src='/captcha?d='+new Date()*1"/>
+        </div>
+    </form>
+    <div style="display: flex">
+        <div class="aa" onclick="login()" style="margin-right: 20px">
+            登录
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <div class="aa2" onclick="register()" style="margin-left: 20px">
+            注册
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </div>
+</div>
+
+<script th:src="@{/plugins/jquery/jquery.js}"></script>
+<script src="/layui/layui.all.js"></script>
+<script src="/layui/layui.js"></script>
+
+<script>
+    var flag = 0
+
+    function login() {
+        window.location = "/jvshijimall/login";
+    }
+
+    /**
+     * 判空
+     */
+    function thisisNull(obj) {
+        if (obj == null || obj == undefined || obj.trim() == "") {
+            return true;
+        }
+        return false;
+    }
+
+    function register() {
+
+        var username = $('#userName').val();
+        var password = $('#password').val();
+        var verifyCode = $('#verifyCode').val();
+        if (thisisNull(verifyCode)) {
+            layer.tips('请输入验证码', '#verifyCode', {
+                tips: [2, 'red'],
+                time: 700
+            });
+            return false;
+        }
+        if (thisisNull(username)) {
+            layer.tips('请输入用户名', '#userName', {
+                tips: [2, 'red']
+            });
+            return false;
+        }
+        if (thisisNull(password)) {
+            layer.tips('请输入密码', '#password', {
+                tips: [2, 'red']
+            });
+            return false;
+        }
+        var msg = {
+            "loginName": username,
+            "password": password,
+            "verifyCode": verifyCode
+        }
+        console.log(msg)
+        $.ajax({
+            type: "POST",
+            url: "/jvshijimall/register",
+            data: msg,
+            success: function (res) {
+                console.log(res)
+                if (res.code == '0') {
+                    layer.msg("注册成功，将跳转至登录页面", {
+                        anim: 6,
+                        time: 2000 //1秒关闭（如果不配置，默认是3秒）
+                    });
+                    setTimeout(function () {
+                        window.location.href = "login"
+                    }, 1700);
+                    return null;
+                } else {
+                    $("#captcha").click();
+                    layer.msg(res.msg, {
+                        anim: 6,
+                        time: 1500 //1秒关闭（如果不配置，默认是3秒）
+                    });
+                }
+            }
+        });
+    }
+</script>
+</body>
+</html>

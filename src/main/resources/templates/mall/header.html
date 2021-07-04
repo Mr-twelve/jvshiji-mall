@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head-fragment(title,path)">
+    <meta charset="UTF-8">
+    <title>聚食集商城</title>
+    <link rel="stylesheet" th:href="@{/mall/css/iconfont.css}">
+    <link rel="stylesheet" th:href="@{/mall/css/common.css}">
+    <link rel="stylesheet" th:href="@{/mall/styles/header.css}">
+    <link rel="stylesheet" th:href="@{'/mall/styles/'+${path}+'.css'}">
+    <!--layui的css-->
+    <link rel="stylesheet" th:href="@{/layui/css/layui.css}" media="all">
+</head>
+<nav id="nav" th:fragment="nav-fragment">
+    <div class="banner_x center">
+        <img th:src="@{/image/jvshijimalllogo.png}" class="logo">
+        <div class="fr">
+            <div class="search">
+                <input class="text" type="text" id="keyword" autocomplete="off">
+                <div class="search_hot">
+                </div>
+            </div>
+            <div class="button iconfont icon-search" onclick="search()"></div>
+        </div>
+    </div>
+</nav>
+<header id="header" th:fragment="header-fragment">
+    <div class="center">
+        <ul class="fl">
+            <li><a th:href="@{/jvshijimall/index}">聚食集商城</a></li>
+            <li><a th:href="@{/admin/index}">后台管理系统</a></li>
+        </ul>
+        <div class="fr">
+            <th:block th:unless="${session.jvShiJiMallUser==null}">
+                <div class="user">
+                    <ul class="selector">
+                        <li>
+                            <a th:href="@{/jvshijimall/personal}">
+                                个人中心
+                            </a>
+                        </li>
+                        <li>
+                            <a th:href="@{/jvshijimall/orders}">
+                                我的订单
+                            </a>
+                        </li>
+                        <li>
+                            <a th:href="@{/jvshijimall/logout}">
+                                退出登录
+                            </a>
+                        </li>
+                    </ul>
+                    <a href="##" class="username">
+                        <th:block th:text="${session.jvShiJiMallUser.nickName}"></th:block>
+                        <i class="iconfont icon-down"></i>
+                    </a>
+                </div>
+                <div class="shopcart">
+                    <a th:href="@{/jvshijimall/shop-cart}" style="color: white;"><i class="iconfont icon-cart"></i>
+                        购物车(
+                        <th:block th:text="${session.jvShiJiMallUser.shopCartItemCount}"></th:block>
+                        )</a>
+                </div>
+            </th:block>
+            <th:block th:if="${session.jvShiJiMallUser==null}">
+                <ul class="login">
+                    <li><a th:href="@{/jvshijimall/login}">登录</a></li>
+                    <li><a th:href="@{/jvshijimall/register}">注册</a></li>
+                </ul>
+                <div class="shopcart">
+                    <a href="##" style="color: white;"><i class="iconfont icon-cart"></i>
+                        购物车(0)</a>
+                </div>
+            </th:block>
+        </div>
+    </div>
+</header>
+</html>

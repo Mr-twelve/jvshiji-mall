@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="header-fragment">
+    <!--Edge 模式通知 Windows Internet Explorer 以最高级别的可用模式显示内容-->
+    <meta charset="UTF-8" http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>jvshiji-mall丨后台管理系统</title>
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <!--iewport标记，用于指定用户是否可以缩放Web页面，并对相关的选项进行设定。
+    device-width即表示，视区宽度应为设备的屏幕宽度。类似的，device-height即表示设备的屏幕高度。
+    initial-scale用于设置Web页面的初始缩放比例。通常情况下，设备会在浏览器中呈现出整个Web页面。设为1.0则显示未经缩放的Web页面。
+    maximum-scale和minimum-scale用于设置用户对于Web页面缩放比例的限制。值的范围为0.25~10.0之间
+    -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" th:href="@{/admin/css/index.css}"/>
+    <link rel="stylesheet" th:href="@{/admin/css/public.css}"/>
+    <!--layui的css-->
+    <link rel="stylesheet" th:href="@{/layui/css/layui.css}" media="all">
+</head>
+<nav class="layui-header" style="background-color: #141e30" th:fragment="header-nav">
+    <div class="layui-logo" style="font-size: 30px;color: #03e9f4">聚食集丨后台</div>
+    <ul class="layui-nav layui-layout-right">
+        <li class="layui-nav-item paomadeng" style="font-weight: bolder">
+            <a href="javascript:;" style="font-size: 17px">
+                <img src="/image/imshier.jpg" class="layui-nav-img" style="width: 47px;height: 47px; ">
+                拾贰S
+            </a>
+<!--            <dl class="layui-nav-child">-->
+<!--                <dd>基本资料</dd>-->
+<!--                <dd>安全设置</dd>-->
+<!--            </dl>-->
+        </li>
+        <li class="layui-nav-item"><a th:href="@{/admin/logout}" style="font-size: 17px">退了</a></li>
+    </ul>
+</nav>
+
+</html>

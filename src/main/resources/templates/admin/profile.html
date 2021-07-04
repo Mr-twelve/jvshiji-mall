@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<header th:replace="admin/header::header-fragment">
+
+</header>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    <!-- 引入页面头header-fragment -->
+    <div th:replace="admin/header::header-nav"></div>
+    <!-- 引入工具栏sidebar-fragment -->
+    <div th:replace="admin/sidebar::sidebar-fragment(${path})"></div>
+
+
+    <div class="layui-body mybgcolor move aa">
+
+        <div style="padding: 20px; background-color: #FAFAFA;height: 95.6%">
+            <div style="padding: 2% 0">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">登录名称</label>
+                    <div class="layui-input-block">
+                        <input type="text" id="loginUserName" name="loginUserName" lay-verify="title" autocomplete="off"
+                               class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">昵称</label>
+                    <div class="layui-input-block">
+                        <input type="text" id="nickName" name="nickName" lay-verify="title" autocomplete="off"
+                               class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-btn-container demoTable" style="margin-left: 30px;margin-top: 25px">
+                    <button type="button" onclick="nameUpdate()" id="nameUpdate"
+                            class="layui-btn layui-btn-lg layui-bg-green">
+                        <text id="tiptext">确定修改</text>
+                    </button>
+                </div>
+            </div>
+            <hr class="layui-border-green" style="background-color: lightseagreen;height: 3px">
+            <div class="layui-form-item" style="padding-top: 2% ">
+                <label class="layui-form-label">原密码</label>
+                <div class="layui-input-block">
+                    <input type="password" id="originalPassword" name="originalPassword" lay-verify="title"
+                           autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">新密码</label>
+                <div class="layui-input-block">
+                    <input type="password" id="newPassword" name="newPassword" lay-verify="title" autocomplete="off"
+                           class="layui-input">
+                </div>
+            </div>
+            <div class="layui-btn-container demoTable" style="margin-left: 30px;margin-top: 25px">
+                <button type="button" onclick="passwordUpdate()" id="passwordUpdate"
+                        class="layui-btn layui-btn-lg layui-bg-green">
+                    <text id="tiptext">确定修改</text>
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- 引入页脚footer-fragment -->
+    <div th:replace="admin/footer::footer-fragment"></div>
+</div>
+<script th:src="@{/plugins/jquery/jquery.min.js}"></script>
+<script th:src="@{/layui/layui.all.js}"></script>
+<script th:src="@{/layui/layui.js}"></script>
+<script th:src="@{/admin/js/profile.js}"></script>
+<script th:src="@{/admin/js/public.js}"></script>
+<script>
+
+</script>
+</body>
+</html>

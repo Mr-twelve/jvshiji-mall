@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shier.mall.dao.CategoryMapper">
+    <resultMap id="BaseResultMap" type="com.shier.mall.entity.Category">
+        <id column="category_id" jdbcType="BIGINT" property="categoryId"/>
+        <result column="category_level" jdbcType="TINYINT" property="categoryLevel"/>
+        <result column="parent_id" jdbcType="BIGINT" property="parentId"/>
+        <result column="category_name" jdbcType="VARCHAR" property="categoryName"/>
+        <result column="category_rank" jdbcType="INTEGER" property="categoryRank"/>
+        <result column="is_deleted" jdbcType="TINYINT" property="isDeleted"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="create_user" jdbcType="INTEGER" property="createUser"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="update_user" jdbcType="INTEGER" property="updateUser"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        category_id
+        , category_level, parent_id, category_name, category_rank, is_deleted,
+    create_time, create_user, update_time, update_user
+    </sql>
+    <insert id="addCategory" parameterType="com.shier.mall.entity.Category">
+        insert into tb_jvshiji_mall_goods_category (category_level, parent_id,
+                                                    category_name, category_rank, is_deleted)
+        values (#{categoryLevel,jdbcType=TINYINT}, #{parentId,jdbcType=BIGINT},
+                #{categoryName,jdbcType=VARCHAR}, #{categoryRank,jdbcType=INTEGER}, 0)
+    </insert>
+    <update id="setCategory" parameterType="com.shier.mall.entity.Category">
+        update tb_jvshiji_mall_goods_category
+        set category_name=#{categoryName,jdbcType=VARCHAR},
+            category_rank=#{categoryRank,jdbcType=INTEGER}
+        where category_id = #{categoryId,jdbcType=BIGINT}
+    </update>
+    <delete id="deleteCategory" >
+        update tb_jvshiji_mall_goods_category
+        set is_deleted = 1, update_time=now() where category_id in
+        <foreach collection="array" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    <select id="getCategoryList" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"></include>
+        from tb_jvshiji_mall_goods_category
+        <where>
+            <if test="categoryLevel!=null and categoryLevel!=''">
+                and category_level = #{categoryLevel}
+            </if>
+            <if test="parentId!=null and parentId!=''">
+                and parent_id = #{parentId}
+            </if>
+            and is_deleted = 0
+        </where>
+        order by category_rank desc
+    </select>
+    <select id="getAllCategoryList" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"></include>
+        from tb_jvshiji_mall_goods_category
+        where is_deleted = 0
+        order by category_rank desc
+    </select>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from tb_jvshiji_mall_goods_category
+        where category_id = #{categoryId,jdbcType=BIGINT} and is_deleted=0
+    </select>
+
+    <select id="selectByLevelAndParentIdsAndNumber" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from tb_jvshiji_mall_goods_category
+        where parent_id in
+        <foreach item="parentId" collection="parentIds" open="(" separator="," close=")">
+            #{parentId,jdbcType=BIGINT}
+        </foreach>
+        and category_level = #{categoryLevel,jdbcType=TINYINT}
+        and is_deleted = 0
+        order by category_rank desc
+        <if test="number>0">
+            limit #{number}
+        </if>
+    </select>
+
+</mapper>

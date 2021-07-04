@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<header th:replace="admin/header::header-fragment">
+
+</header>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    <!-- 引入页面头header-fragment -->
+    <div th:replace="admin/header::header-nav"></div>
+    <!-- 引入工具栏sidebar-fragment -->
+    <div th:replace="admin/sidebar::sidebar-fragment(${path})"></div>
+
+    <div class="layui-body mybgcolor move aa">
+        <div style="height: 100%;margin-right: 6px;background-color: #F0F0F0">
+            <!---------------------------------------------->
+            <div>
+                <table id="indexconfig" lay-filter="test"></table>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- 引入页脚footer-fragment -->
+    <div th:replace="admin/footer::footer-fragment"></div>
+</div>
+<script th:src="@{/plugins/jquery/jquery.min.js}"></script>
+<script th:src="@{/layui/layui.js}"></script>
+<script th:src="@{/admin/js/malluser.js}"></script>
+<style type="text/css">
+    .layui-table-view {
+        margin: 0;
+    }
+
+    .layui-table td, .layui-table th {
+        font-size: 18px;
+    }
+</style>
+<script type="text/html" id="toolbarDemo">
+    <div class="layui-btn-container demoTable">
+        <button onclick="lockUser(0)" class="layui-btn layui-btn-lg"><i class="layui-icon">&#xe624;</i> 解除用户</button>
+        <button onclick="lockUser(1)" class="layui-btn layui-btn-lg layui-btn-danger"><i class="layui-icon">&#xe642;</i> 禁用用户</button>
+    </div>
+</script>
+</body>
+</html>

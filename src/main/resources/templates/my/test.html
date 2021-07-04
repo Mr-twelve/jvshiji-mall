@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type="text/css">
+        .but{
+            border: 10px solid #f35626;
+            padding: 1.5rem;
+            color: #f35626;
+            -webkit-animation: hue 1s infinite linear;
+            background-color: transparent;
+            -webkit-appearance:none;
+            border-radius: 10px;
+        }
+        @-webkit-keyframes hue {
+            from {
+                -webkit-filter: hue-rotate(0deg);
+            }
+
+            to {
+                -webkit-filter: hue-rotate(-360deg);
+            }
+        }
+
+        .paomadeng{
+            color: #f35626;
+            font-size: 6rem;
+            background-image:-webkit-linear-gradient(92deg, #27e812, #0859e2);
+            -webkit-animation: hue 0.8s infinite linear;
+            -webkit-text-fill-color: transparent;
+            -webkit-background-clip:text;
+        }
+
+
+    </style>
+</head>
+<body class="layui-layout-body">
+
+
+
+
+        <h3 class="paomadeng">animate css</h3>
+        <button type="button" class="but">animate</button>
+
+
+
+<script th:src="@{/plugins/jquery/jquery.min.js}"></script>
+<script th:src="@{/layui/layui.all.js}"></script>
+<script th:src="@{/layui/layui.js}"></script>
+
+
+</body>
+</html>

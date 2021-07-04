@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shier.mall.dao.CarouselMapper">
+    <resultMap id="Base_Column_List" type="com.shier.mall.entity.Carousel">
+        <id column="carousel_id" jdbcType="INTEGER" property="carouselId"/>
+        <result column="carousel_url" jdbcType="VARCHAR" property="carouselUrl"/>
+        <result column="redirect_url" jdbcType="VARCHAR" property="redirectUrl"/>
+        <result column="carousel_rank" jdbcType="INTEGER" property="carouselRank"/>
+        <result column="is_deleted" jdbcType="TINYINT" property="isDeleted"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="create_user" jdbcType="INTEGER" property="createUser"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="update_user" jdbcType="INTEGER" property="updateUser"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        carousel_id
+        , carousel_url, redirect_url, carousel_rank, is_deleted, create_time,
+    create_user, update_time, update_user
+    </sql>
+    <insert id="addCarousel" parameterType="com.shier.mall.entity.Carousel">
+        insert into tb_jvshiji_mall_carousel (carousel_url, redirect_url,
+                                              carousel_rank, is_deleted)
+        values (#{carouselUrl,jdbcType=VARCHAR}, #{redirectUrl,jdbcType=VARCHAR},
+                #{carouselRank,jdbcType=INTEGER}, #{isDeleted,jdbcType=TINYINT})
+    </insert>
+    <select id="carouserlList" parameterType="Map" resultMap="Base_Column_List">
+        select
+        <include refid="Base_Column_List"></include>
+        from tb_jvshiji_mall_carousel
+        where is_deleted = 0
+        order by carousel_rank desc
+        <if test="start!=null and limit!=null">
+            limit #{start},#{limit}
+        </if>
+    </select>
+    <select id="getCount" parameterType="Map" resultType="int">
+        select count(*)
+        from tb_jvshiji_mall_carousel
+        where is_deleted = 0
+    </select>
+    <select id="indexCarousel" resultMap="Base_Column_List">
+        select
+        <include refid="Base_Column_List"></include>
+        from tb_jvshiji_mall_carousel
+        where is_deleted = 0
+        order by carousel_rank desc
+        limit 0 , #{num}
+    </select>
+    <update id="deleteCarousel">
+        update tb_jvshiji_mall_carousel
+        set is_deleted=1,update_time=now() where carousel_id in
+        <foreach collection="array" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
+    <update id="updataCarousel" parameterType="map">
+        update tb_jvshiji_mall_carousel
+        set update_time=now() ,redirect_url = #{redirectUrl,jdbcType=VARCHAR},carousel_rank = #{carouselRank,jdbcType=TINYINT}
+        where carousel_id = #{carouselId,jdbcType=TINYINT}
+    </update>
+</mapper>
